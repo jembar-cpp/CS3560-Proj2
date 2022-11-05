@@ -37,7 +37,6 @@ public class TreeView extends JPanel implements TreeSelectionListener {
         }
         // Update the last selected object
         lastSelected = node;
-        this.addNode(new User("NewUser"));
     }
 
     // Insert a new node after the selected node
@@ -46,6 +45,12 @@ public class TreeView extends JPanel implements TreeSelectionListener {
         DefaultMutableTreeNode insertAfter = (DefaultMutableTreeNode) lastSelected;
         if(insertAfter == null) {
             insertAfter = (DefaultMutableTreeNode) model.getRoot();
+        }
+        else {
+            if(insertAfter.getUserObject() instanceof User) {
+                // User selected: add node to the parent of the user
+                insertAfter = (DefaultMutableTreeNode) insertAfter.getParent();
+            }
         }
         model.insertNodeInto(new DefaultMutableTreeNode(node), insertAfter, insertAfter.getChildCount());
     }
