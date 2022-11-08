@@ -1,6 +1,7 @@
 /**
  * AdminPanel
- * Implements the Singleton pattern
+ * Contains admin functions
+ * Implements the Singleton pattern and Composite pattern.
  */
 
 import javax.swing.*;
@@ -14,7 +15,10 @@ public class AdminPanel extends JPanel {
     private static AdminPanel instance = null;
 
     // Users
-    ArrayList<User> users;
+    private static ArrayList<User> users;
+
+    // Groups
+    private static ArrayList<Group> groups;
 
     // Panel components
     private TreeView tv;
@@ -24,23 +28,40 @@ public class AdminPanel extends JPanel {
     private JButton bUserView;
 
     private JTextField fAddUser;
+    private JTextField fAddGroup;
 
     private AdminPanel() {
         users = new ArrayList<>();
+        groups = new ArrayList<>();
 
         // Initialize the buttons and text fields
+        users.add(new User("User1"));
+        setLayout(null);
+        setLocation(100, 100);
+
+        // Add user
         bAddUser = new JButton("Add User");
         bAddUser.setBounds(0, 10, 100, 50);
         bAddUser.addActionListener(e -> addUser());
         fAddUser = new JTextField();
-        fAddUser.setBounds(110,10,100,50);
-        JButton b2 = new JButton("Test2");
-        b2.setBounds(200, 100, 50, 50);
+        fAddUser.setBounds(110, 10, 100, 50);
         add(bAddUser);
         add(fAddUser);
-        add(b2);
-        setLayout(null);
-        setLocation(100, 100);
+
+        // Add group
+        bAddGroup = new JButton("Add Group");
+        bAddGroup.setBounds(0, 70, 100, 50);
+        bAddGroup.addActionListener(e -> addGroup());
+        fAddGroup = new JTextField();
+        fAddGroup.setBounds(110, 70, 100, 50);
+        add(bAddGroup);
+        add(fAddGroup);
+
+        // User view
+        bUserView = new JButton("Open User View");
+        bUserView.setBounds(0, 130, 210, 50);
+        bUserView.addActionListener(e -> openUserView());
+        add(bUserView);
 
         // Set up the JFrame
         tv = TreeView.getInstance();
@@ -57,7 +78,7 @@ public class AdminPanel extends JPanel {
      * Adds a new user using the text in the Add User text field.
      * Gets called when the Add User button is clicked.
      */
-    private void addUser() {
+    public void addUser() {
         String userID = fAddUser.getText();
 
         if(!userID.isEmpty()) {
@@ -68,10 +89,45 @@ public class AdminPanel extends JPanel {
         }
     }
 
+    /**
+     * Adds a new group using the text in the Add Group text field.
+     * Gets called when the Add Group button is clicked.
+     */
+    private void addGroup() {
+        String groupID = fAddGroup.getText();
+
+        if(!groupID.isEmpty()) {
+            // Only add the user if the text field isn't empty
+            Group g = new Group(groupID);
+            groups.add(g);
+            tv.addNode(g);
+        }
+    }
+
+    /**
+     * Opens the selected user's user view
+     */
+    private void openUserView() {
+        // Get the selected user
+        if(tv.getLastSelected() != null) {
+            Object o = tv.getLastSelected().getUserObject();
+            if(o instanceof User) {
+                int i = users.indexOf(o);
+                if(i != -1) {
+                    new UserView(users.get(i));
+                }
+            }
+        }
+    }
+
     public static AdminPanel getInstance() {
         if(instance == null) {
             instance = new AdminPanel();
         }
         return instance;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
     }
 }

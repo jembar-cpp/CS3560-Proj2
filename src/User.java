@@ -11,7 +11,19 @@ public class User {
 
     // Initialize a user with its unique ID
     public User(String id) {
+        followers = new ArrayList<>();
+        following = new ArrayList<>();
         this.id = id;
+    }
+
+    // Add a follower
+    public void addFollower(Object o) {
+        followers.add(o.toString());
+    }
+
+    // Follow a user
+    public void follow(Object o) {
+        following.add(o.toString());
     }
 
     public String getID() {
@@ -24,6 +36,11 @@ public class User {
 
     public ArrayList<String> getFollowing() {
         return following;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof User) && (this.id.equals(o.toString()));
     }
 
     public String toString() {

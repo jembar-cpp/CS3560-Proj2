@@ -1,7 +1,7 @@
 /**
  * TreeView
  * Displays all the users and groups as a tree.
- * Implements the Singleton pattern.
+ * Implements the Singleton pattern and the Composite pattern.
  */
 
 import javax.swing.*;
@@ -11,17 +11,18 @@ import javax.swing.event.*;
 public class TreeView extends JPanel implements TreeSelectionListener {
     private static TreeView instance = null;
     private JTree tree;
-    private Object lastSelected = null;
+    private DefaultMutableTreeNode lastSelected = null;
 
     private TreeView() { 
         // Initialize the tree with root and a default user
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
-        root.add(new DefaultMutableTreeNode("User1"));
+        root.add(new DefaultMutableTreeNode(new User("User1")));
         tree = new JTree(root);
 
         // Make the tree single-selection mode and listen for selection
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.addTreeSelectionListener(this);
+        tree.setCellRenderer(new DefaultTreeCellRenderer());
 
         // Add the scrollable tree
         add(new JScrollPane(tree));
@@ -52,11 +53,15 @@ public class TreeView extends JPanel implements TreeSelectionListener {
                 insertAfter = (DefaultMutableTreeNode) insertAfter.getParent();
             }
         }
+        if(node instanceof Group) {
+            // Inserting a group: make the text bold
+            node = new Group("<html><b>"+node.toString()+"</b></html>");
+        }
         model.insertNodeInto(new DefaultMutableTreeNode(node), insertAfter, insertAfter.getChildCount());
     }
 
     // Returns the last selected node
-    public Object getLastSelected() {
+    public DefaultMutableTreeNode getLastSelected() {
         return lastSelected;
     }
 
