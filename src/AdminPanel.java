@@ -114,7 +114,7 @@ public class AdminPanel extends JPanel {
             if(o instanceof User) {
                 int i = users.indexOf(o);
                 if(i != -1) {
-                    new UserView(users.get(i));
+                    users.get(i).openUserView();
                 }
             }
         }
