@@ -1,7 +1,7 @@
 /**
  * User view for a user
  * Contains functions for users
- * Uses the Composite pattern.
+ * Uses the Composite and Observer patterns.
  */
 
 import javax.swing.*;

@@ -1,7 +1,7 @@
 /**
  * User
  * Contains a reference to its User View
- * Uses the Visitor pattern.
+ * Uses the Visitor and Observer patterns.
  */
 
 import java.util.ArrayList;
@@ -13,12 +13,16 @@ public class User {
     private ArrayList<User> following;
     private ArrayList<String> messageFeed;
 
+    private Visitor visitor;
+
     // Initialize a user with its unique ID
     public User(String id) {
         followers = new ArrayList<>();
         following = new ArrayList<>();
         messageFeed = new ArrayList<>();
         this.id = id;
+
+        visitor = Visitor.getInstance();
     }
 
     // Opens the user view
@@ -42,6 +46,7 @@ public class User {
         if(userView != null) {
             // Update the user view if it's initialized
             userView.addToFeed(s);
+            visitor.atMessage(s); // Call the visitor
         }
     }
 
