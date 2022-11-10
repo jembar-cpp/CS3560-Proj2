@@ -5,7 +5,6 @@
  */
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
