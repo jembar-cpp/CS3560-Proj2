@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class UserView extends JPanel {
     private User user;
+    private static Visitor visitor;
 
     // Panel components
     private JButton bFollowUser;
@@ -27,6 +28,7 @@ public class UserView extends JPanel {
     // Construct a UserView with the user
     public UserView(User u) {
         user = u;
+        visitor = Visitor.getInstance();
         setLayout(null);
         setLocation(100, 100);
 
@@ -121,6 +123,7 @@ public class UserView extends JPanel {
                 // Update the feeds of followers
                 u.addMessage(message);
             }
+            visitor.atMessage(message); // Call the visitor
         }
     }
 
