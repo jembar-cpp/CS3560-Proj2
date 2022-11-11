@@ -11,8 +11,11 @@ public class Visitor {
     private int messageTotal;
     private int positiveMessageTotal;
 
-    private final String positiveWords[] =
-        {"good", "great"};
+    private final String positiveWords[] = {
+        "good", "great", "fun", "happy", "positive",
+        "fantastic", "excellent", "joy", "funny", "nice",
+        "perfect", "wonderful", "exciting", "successful", "CS3560"
+    };
 
     private static Visitor visitor = null;
 
