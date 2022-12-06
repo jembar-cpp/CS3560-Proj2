@@ -64,34 +64,34 @@ public class AdminPanel extends JPanel {
 
         // User view
         bUserView = new JButton("Open User View");
-        bUserView.setBounds(0, 130, 210, 50);
+        bUserView.setBounds(0, 130, 210, 30);
         bUserView.addActionListener(e -> openUserView());
         add(bUserView);
 
         // Admin functions
         bUserTotal = new JButton("User Total");
-        bUserTotal.setBounds(0, 190, 100, 50);
+        bUserTotal.setBounds(0, 170, 100, 30);
         bUserTotal.addActionListener(
             e -> JOptionPane.showMessageDialog(f,
             String.format("There " + (visitor.getUserTotal() == 1 ? "is %d user." : "are %d users."), visitor.getUserTotal())));
         add(bUserTotal);
 
         bGroupTotal = new JButton("Group Total");
-        bGroupTotal.setBounds(110, 190, 100, 50);
+        bGroupTotal.setBounds(110, 170, 100, 30);
         bGroupTotal.addActionListener(
             e -> JOptionPane.showMessageDialog(f,
             String.format("There " + (visitor.getGroupTotal() == 1 ? "is %d group." : "are %d groups."), visitor.getGroupTotal())));
         add(bGroupTotal);
 
         bMessageTotal = new JButton("Message Total");
-        bMessageTotal.setBounds(0, 250, 210, 50);
+        bMessageTotal.setBounds(0, 210, 210, 30);
         bMessageTotal.addActionListener(
             e -> JOptionPane.showMessageDialog(f,
             String.format("There " + (visitor.getMessageTotal() == 1 ? "has been %d message" : "have been %d messages") + " posted.", visitor.getMessageTotal())));
         add(bMessageTotal);
 
         bPositiveMessagePercentage = new JButton("Positive Message Percentage");
-        bPositiveMessagePercentage.setBounds(0, 310, 210, 50);
+        bPositiveMessagePercentage.setBounds(0, 250, 210, 30);
         bPositiveMessagePercentage.addActionListener(
             e -> JOptionPane.showMessageDialog(f,
             String.format("The percentage of positive messages is %.2f%%.", visitor.getPositiveMessagePercentage())));
@@ -114,7 +114,7 @@ public class AdminPanel extends JPanel {
     public void addUser() {
         String userID = fAddUser.getText();
 
-        if(!userID.isEmpty()) {
+        if(!userID.isEmpty() && !userID.contains(" ") && !users.contains(new User(userID)) && !groups.contains(new Group(userID))) {
             // Only add the user if the text field isn't empty
             User u = new User(userID);
             users.add(u);
@@ -130,7 +130,7 @@ public class AdminPanel extends JPanel {
     private void addGroup() {
         String groupID = fAddGroup.getText();
 
-        if(!groupID.isEmpty()) {
+        if(!groupID.isEmpty() && !groupID.contains(" ") && !users.contains(new User(groupID)) && !groups.contains(new Group(groupID))) {
             // Only add the user if the text field isn't empty
             Group g = new Group(groupID);
             groups.add(g);

@@ -24,4 +24,9 @@ public class Group {
     public String toString() {
         return getID();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof Group) && (this.id.equals(o.toString()));
+    }
 }
