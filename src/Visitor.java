@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Generic visitor
  * Keeps track of user count, group count, total messages, and positive message percentage
@@ -61,6 +63,34 @@ public class Visitor {
 
     public double getPositiveMessagePercentage() {
         return messageTotal == 0 ? 0 : positiveMessageTotal * 100.0 / messageTotal;
+    }
+
+    // Validates user and group IDs
+    public boolean validateIDs() {
+        ArrayList<User> users = AdminPanel.getUsers();
+        ArrayList<Group> groups = AdminPanel.getGroups();
+
+        // Check for duplicate user IDs
+        for(int i = 0; i < users.size(); i++) { // O(n^2)
+            for(int j = 0; j < users.size(); j++) {
+                if(i == j) {continue;} // skip same element
+                if(users.get(i) == users.get(j)) {
+                    return false; // duplicate
+                }
+            }
+        }
+
+        // Check for duplicate group IDs
+        for(int i = 0; i < groups.size(); i++) {
+            for(int j = 0; j < groups.size(); j++) {
+                if(i == j) {continue;} // skip same element
+                if(groups.get(i) == groups.get(j)) {
+                    return false; // duplicate
+                }
+            }
+        }
+
+        return true;
     }
 
     public static Visitor getInstance() {

@@ -30,6 +30,7 @@ public class AdminPanel extends JPanel {
     private JButton bGroupTotal;
     private JButton bMessageTotal;
     private JButton bPositiveMessagePercentage;
+    private JButton bValidateIDs;
 
     private JTextField fAddUser;
     private JTextField fAddGroup;
@@ -96,6 +97,13 @@ public class AdminPanel extends JPanel {
             e -> JOptionPane.showMessageDialog(f,
             String.format("The percentage of positive messages is %.2f%%.", visitor.getPositiveMessagePercentage())));
         add(bPositiveMessagePercentage);
+
+        bValidateIDs = new JButton("Validate IDs");
+        bValidateIDs.setBounds(0, 290, 210, 30);
+        bValidateIDs.addActionListener(
+            e -> JOptionPane.showMessageDialog(f,
+            String.format("All IDs are valid: %b.", visitor.validateIDs())));
+        add(bValidateIDs);
 
         // Set up the JFrame
         tv = TreeView.getInstance();
@@ -164,5 +172,9 @@ public class AdminPanel extends JPanel {
 
     public static ArrayList<User> getUsers() {
         return users;
+    }
+
+    public static ArrayList<Group> getGroups() {
+        return groups;
     }
 }
