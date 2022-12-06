@@ -21,6 +21,8 @@ public class UserView extends JPanel {
 
     private JLabel lbFollowing;
     private JLabel lbFeed;
+    private JLabel lbCreationTime;
+    private JLabel lbUpdateTime;
 
     private DefaultListModel<String> lmFollowerModel;
     private DefaultListModel<String> lmFeedModel;
@@ -80,6 +82,14 @@ public class UserView extends JPanel {
         add(lbFeed);
         add(spFeed);
 
+        // Creation and update time
+        lbCreationTime = new JLabel("Created at: " + u.getCreationTime());
+        lbCreationTime.setBounds(10, 320, 410, 100);
+        add(lbCreationTime);
+        lbUpdateTime = new JLabel("Updated at: " + u.getUpdateTime());
+        lbUpdateTime.setBounds(10, 340, 410, 100);
+        add(lbUpdateTime);
+
         // Set up the JFrame
         JFrame f = new JFrame(u.getID() + " User View");
         f.setPreferredSize(new Dimension(450, 450));
@@ -132,5 +142,10 @@ public class UserView extends JPanel {
      */
     public void addToFeed(String message) {
         lmFeedModel.addElement(message);
+    }
+
+    // Refresh the user view to reflect last updated time
+    public void update() {
+        lbUpdateTime.setText("Updated at: " + user.getUpdateTime());
     }
 }

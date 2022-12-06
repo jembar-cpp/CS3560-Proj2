@@ -12,6 +12,8 @@ public class User {
     private ArrayList<User> followers;
     private ArrayList<User> following;
     private ArrayList<String> messageFeed;
+    private long creationTime;
+    private long updateTime;
 
     // Initialize a user with its unique ID
     public User(String id) {
@@ -19,6 +21,8 @@ public class User {
         following = new ArrayList<>();
         messageFeed = new ArrayList<>();
         this.id = id;
+        creationTime = System.currentTimeMillis();
+        updateTime = creationTime;
     }
 
     // Opens the user view
@@ -43,6 +47,18 @@ public class User {
             // Update the user view if it's initialized
             userView.addToFeed(s);
         }
+
+        // Update the last updated time as well
+        updateTime = System.currentTimeMillis();
+        userView.update();
+    }
+
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
     }
 
     public String getID() {

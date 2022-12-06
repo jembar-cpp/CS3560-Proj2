@@ -31,6 +31,7 @@ public class AdminPanel extends JPanel {
     private JButton bMessageTotal;
     private JButton bPositiveMessagePercentage;
     private JButton bValidateIDs;
+    private JButton bLastUpdatedUser;
 
     private JTextField fAddUser;
     private JTextField fAddGroup;
@@ -104,6 +105,14 @@ public class AdminPanel extends JPanel {
             e -> JOptionPane.showMessageDialog(f,
             String.format("All IDs are valid: %b.", visitor.validateIDs())));
         add(bValidateIDs);
+
+        bLastUpdatedUser = new JButton("Last Updated User ID");
+        bLastUpdatedUser.setBounds(0, 330, 210, 30);
+        bLastUpdatedUser.addActionListener(
+            e -> JOptionPane.showMessageDialog(f,
+            String.format("Last updated user: %s.", visitor.getLastUpdatedUser())));
+        add(bLastUpdatedUser);
+
 
         // Set up the JFrame
         tv = TreeView.getInstance();

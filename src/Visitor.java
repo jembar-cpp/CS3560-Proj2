@@ -93,6 +93,25 @@ public class Visitor {
         return true;
     }
 
+    /**
+     * Returns the last updated user
+     * In the case of duplicate last updated users, returns the one which was created earliest
+     */
+    public String getLastUpdatedUser() {
+        long max = 0;
+        User lastUpdatedUser = null;
+        for(User u : AdminPanel.getUsers()) {
+            if(u.getUpdateTime() > max) {
+                max = u.getUpdateTime();
+                lastUpdatedUser = u;
+            }
+        }
+        if(lastUpdatedUser != null) {
+            return lastUpdatedUser.toString();
+        }
+        return "No users found";
+    }
+
     public static Visitor getInstance() {
         if(visitor == null) {
             visitor = new Visitor();
